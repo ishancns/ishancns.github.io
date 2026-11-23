@@ -3,19 +3,20 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ICS Soft — Independent Mobile App Studio</title>
-  <meta name="description" content="ICS Soft crafts thoughtful, utility-focused Android applications including Rahu Time." />
+  <title>ICS Soft — Rahu Time: Personal Vedic Panchanga Companion</title>
+  <meta name="description" content="Track Rahu, Yamagandam, Gulika, Abhijit Muhurta, and Nishitha Kaal in real time with Rahu Time by ICS Soft." />
   <style>
     :root {
-      --bg: #0f172a;
-      --surface: #1e293b;
-      --surface-hover: #26354d;
-      --border: #334155;
+      --bg: #080a16;
+      --surface: #12162b;
+      --surface-elevated: #191f3b;
+      --border: rgba(255, 255, 255, 0.1);
       --text-main: #f8fafc;
       --text-muted: #94a3b8;
-      --accent: #6366f1;
-      --accent-hover: #4f46e5;
       --gold: #f59e0b;
+      --gold-light: #fcd34d;
+      --indigo: #6366f1;
+      --pink-glow: #ec4899;
     }
 
     * {
@@ -27,6 +28,10 @@
     body {
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
       background-color: var(--bg);
+      background-image:
+        radial-gradient(circle at 15% 10%, rgba(99, 102, 241, 0.16), transparent 40%),
+        radial-gradient(circle at 85% 25%, rgba(236, 72, 153, 0.12), transparent 40%),
+        radial-gradient(circle at 50% 80%, rgba(245, 158, 11, 0.08), transparent 50%);
       color: var(--text-main);
       line-height: 1.6;
       min-height: 100vh;
@@ -36,15 +41,20 @@
 
     .container {
       width: 100%;
-      max-width: 880px;
+      max-width: 1040px;
       margin: 0 auto;
       padding: 0 1.5rem;
     }
 
     /* Header */
     header {
-      padding: 2rem 0;
-      border-bottom: 1px solid rgba(51, 65, 85, 0.5);
+      padding: 1.5rem 0;
+      border-bottom: 1px solid var(--border);
+      backdrop-filter: blur(12px);
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(8, 10, 22, 0.8);
     }
 
     .nav {
@@ -54,26 +64,35 @@
     }
 
     .brand {
-      font-size: 1.25rem;
+      font-size: 1.2rem;
       font-weight: 700;
       letter-spacing: -0.02em;
       display: flex;
       align-items: center;
-      gap: 0.6rem;
+      gap: 0.65rem;
+      color: var(--text-main);
+      text-decoration: none;
     }
 
-    .brand-dot {
-      width: 10px;
-      height: 10px;
+    .brand-mark {
+      width: 12px;
+      height: 12px;
       border-radius: 50%;
-      background: linear-gradient(135deg, var(--accent), var(--gold));
+      background: linear-gradient(135deg, var(--gold), var(--pink-glow));
+      box-shadow: 0 0 12px rgba(245, 158, 11, 0.6);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
     }
 
     .nav-links a {
       color: var(--text-muted);
       text-decoration: none;
-      font-size: 0.95rem;
-      margin-left: 1.5rem;
+      font-size: 0.92rem;
+      font-weight: 500;
       transition: color 0.2s;
     }
 
@@ -83,155 +102,232 @@
 
     /* Hero */
     .hero {
-      padding: 4.5rem 0 3.5rem;
-      text-align: center;
+      padding: 4rem 0 3rem;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2.5rem;
+      align-items: center;
+    }
+
+    @media (min-width: 860px) {
+      .hero {
+        grid-template-columns: 1.1fr 0.9fr;
+        padding: 5rem 0 4rem;
+      }
+    }
+
+    .app-identity {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .app-icon-img {
+      width: 72px;
+      height: 72px;
+      border-radius: 18px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(245, 158, 11, 0.35);
+      object-fit: cover;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.78rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      padding: 0.3rem 0.75rem;
+      border-radius: 999px;
+      background: rgba(245, 158, 11, 0.12);
+      border: 1px solid rgba(245, 158, 11, 0.35);
+      color: var(--gold-light);
     }
 
     .hero h1 {
-      font-size: clamp(2rem, 5vw, 3rem);
+      font-size: clamp(2.1rem, 4.5vw, 3.1rem);
       font-weight: 800;
       letter-spacing: -0.03em;
-      line-height: 1.15;
+      line-height: 1.12;
       margin-bottom: 1rem;
+    }
+
+    .hero h1 span {
+      background: linear-gradient(135deg, #ffffff 30%, var(--gold-light) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
     }
 
     .hero p {
       color: var(--text-muted);
-      font-size: 1.125rem;
-      max-width: 580px;
-      margin: 0 auto;
+      font-size: 1.08rem;
+      margin-bottom: 1.75rem;
+      max-width: 540px;
     }
 
-    /* App Showcase */
-    .section-title {
-      font-size: 0.85rem;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      color: var(--text-muted);
-      margin-bottom: 1.25rem;
-      font-weight: 600;
-    }
-
-    .app-card {
-      background-color: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 2rem;
-      display: flex;
-      flex-direction: column;
-      gap: 1.5rem;
-      transition: transform 0.2s ease, border-color 0.2s ease;
-    }
-
-    .app-card:hover {
-      border-color: #475569;
-    }
-
-    .app-header {
-      display: flex;
-      align-items: center;
-      gap: 1.25rem;
-    }
-
-    .app-icon {
-      width: 64px;
-      height: 64px;
-      border-radius: 14px;
-      background: linear-gradient(135deg, #1e1b4b, #4338ca);
-      border: 1px solid rgba(245, 158, 11, 0.4);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.75rem;
-      flex-shrink: 0;
-      color: var(--gold);
-    }
-
-    .app-meta h2 {
-      font-size: 1.4rem;
-      font-weight: 700;
-      margin-bottom: 0.2rem;
-    }
-
-    .badge {
-      display: inline-block;
-      font-size: 0.75rem;
-      font-weight: 600;
-      padding: 0.2rem 0.6rem;
-      border-radius: 999px;
-      background-color: rgba(99, 102, 241, 0.15);
-      color: #a5b4fc;
-    }
-
-    .app-description {
-      color: var(--text-muted);
-      font-size: 1rem;
-    }
-
-    .app-features {
+    .cta-group {
       display: flex;
       flex-wrap: wrap;
-      gap: 0.5rem;
+      gap: 0.9rem;
+      align-items: center;
     }
 
-    .tag {
-      font-size: 0.82rem;
-      color: var(--text-main);
-      background-color: rgba(15, 23, 42, 0.6);
-      border: 1px solid var(--border);
-      padding: 0.35rem 0.75rem;
-      border-radius: 8px;
-    }
-
-    .btn {
+    .btn-primary {
       display: inline-flex;
       align-items: center;
-      justify-content: center;
-      gap: 0.5rem;
-      background-color: var(--accent);
-      color: #ffffff;
+      gap: 0.6rem;
+      background: linear-gradient(135deg, var(--gold), #d97706);
+      color: #090d16;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 0.98rem;
+      padding: 0.85rem 1.5rem;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(245, 158, 11, 0.25);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 12px 26px rgba(245, 158, 11, 0.35);
+    }
+
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      color: var(--text-main);
       text-decoration: none;
       font-weight: 600;
       font-size: 0.95rem;
-      padding: 0.75rem 1.4rem;
-      border-radius: 10px;
-      align-self: flex-start;
-      transition: background-color 0.2s;
+      padding: 0.85rem 1.35rem;
+      border-radius: 12px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      transition: background 0.2s;
     }
 
-    .btn:hover {
-      background-color: var(--accent-hover);
+    .btn-secondary:hover {
+      background: var(--surface-elevated);
+    }
+
+    .hero-banner {
+      border-radius: 20px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+      background: var(--surface);
+    }
+
+    .hero-banner img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    /* Section Headings */
+    .section {
+      padding: 3.5rem 0;
+    }
+
+    .section-header {
+      margin-bottom: 2rem;
+    }
+
+    .section-kicker {
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--gold);
+      margin-bottom: 0.4rem;
+    }
+
+    .section-header h2 {
+      font-size: 1.75rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    /* Feature Grid */
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 1.25rem;
+    }
+
+    .feature-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 1.5rem;
+    }
+
+    .feature-card h3 {
+      font-size: 1.08rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      color: var(--text-main);
+    }
+
+    .feature-card p {
+      font-size: 0.92rem;
+      color: var(--text-muted);
+    }
+
+    /* Screenshots Gallery */
+    .screenshots-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 1.15rem;
+    }
+
+    .shot-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      transition: transform 0.25s ease, border-color 0.25s ease;
+    }
+
+    .shot-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(245, 158, 11, 0.45);
+    }
+
+    .shot-card img {
+      width: 100%;
+      height: auto;
+      display: block;
     }
 
     /* Footer */
     footer {
       margin-top: auto;
-      padding: 3rem 0 2rem;
-      border-top: 1px solid rgba(51, 65, 85, 0.5);
+      padding: 3rem 0 2.5rem;
+      border-top: 1px solid var(--border);
       text-align: center;
       color: var(--text-muted);
       font-size: 0.9rem;
     }
 
     .footer-links {
-      margin-bottom: 0.75rem;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      margin-bottom: 0.85rem;
     }
 
     .footer-links a {
       color: var(--text-muted);
       text-decoration: none;
-      margin: 0 0.75rem;
     }
 
     .footer-links a:hover {
       color: var(--text-main);
       text-decoration: underline;
-    }
-
-    @media (min-width: 640px) {
-      .app-card {
-        padding: 2.25rem;
-      }
     }
   </style>
 </head>
@@ -239,48 +335,105 @@
 
   <header>
     <div class="container nav">
-      <div class="brand">
-        <span class="brand-dot"></span>
+      <a href="#" class="brand">
+        <span class="brand-mark"></span>
         <span>ICS Soft</span>
-      </div>
+      </a>
       <nav class="nav-links">
-        <a href="#apps">Apps</a>
-        <a href="mailto:support@icssoft.example.com">Contact</a>
+        <a href="#features">Features</a>
+        <a href="#screenshots">Preview</a>
+        <a href="mailto:support@icssoft.example.com">Support</a>
       </nav>
     </div>
   </header>
 
   <main class="container">
+    <!-- Hero Showcase -->
     <section class="hero">
-      <h1>Thoughtful utility apps built for everyday clarity.</h1>
-      <p>ICS Soft designs clean, reliable Android software with a focus on precision, performance, and intuitive design.</p>
-    </section>
-
-    <section id="apps">
-      <div class="section-title">Featured Application</div>
-      <div class="app-card">
-        <div class="app-header">
-          <div class="app-icon" aria-hidden="true">&#9788;</div>
-          <div class="app-meta">
-            <h2>Rahu Time</h2>
-            <span class="badge">Android • Utility</span>
+      <div>
+        <div class="app-identity">
+          <img src="assets/app_icon_512x512.png" alt="Rahu Time App Icon" class="app-icon-img" />
+          <div>
+            <span class="pill">Personal Vedic Panchanga</span>
+            <div style="font-size: 0.88rem; color: var(--text-muted); margin-top: 0.35rem;">
+              By ICS Soft &bull; Android
+            </div>
           </div>
         </div>
 
-        <p class="app-description">
-          Track daily auspicious and inauspicious astronomical periods with location-accurate solar calculations, an interactive timeline scrubber, customizable visual themes, and bilingual support.
+        <h1><span>Rahu Time</span> — Track Auspicious &amp; Inauspicious Hours</h1>
+        <p>
+          Your personal Vedic Panchanga companion. Track Rahu Kaal, Yamagandam, Gulika Kaal, Abhijit Muhurta, and Nishitha Kaal in real time with minute-by-minute solar precision.
         </p>
 
-        <div class="app-features">
-          <span class="tag">Location-Based Solar Timing</span>
-          <span class="tag">Interactive Timeline</span>
-          <span class="tag">English &amp; Sinhala</span>
-          <span class="tag">Daily Alerts</span>
+        <div class="cta-group">
+          <a class="btn-primary" href="https://play.google.com/store/apps/details?id=com.icssoft.rahutime" target="_blank" rel="noopener noreferrer">
+            Get it on Google Play &rarr;
+          </a>
+          <a class="btn-secondary" href="#screenshots">
+            Explore Screens
+          </a>
+        </div>
+      </div>
+
+      <div class="hero-banner">
+        <img src="assets/feature_graphic_1024x500.jpg" alt="Rahu Time — Your Personal Vedic Panchanga Companion" />
+      </div>
+    </section>
+
+    <!-- Core Features -->
+    <section id="features" class="section">
+      <div class="section-header">
+        <div class="section-kicker">Precision Timing</div>
+        <h2>Everything You Need to Plan Your Day &amp; Night</h2>
+      </div>
+
+      <div class="features-grid">
+        <div class="feature-card">
+          <h3>Real-Time Rahu &amp; Muhurtas</h3>
+          <p>Live countdowns and status badges for Rahu Time, Yamagandam, Gulika Kaal, and victorious Abhijit Muhurta windows.</p>
         </div>
 
-        <a class="btn" href="https://play.google.com/store/apps/details?id=com.icssoft.rahutime" target="_blank" rel="noopener noreferrer">
-          Get it on Google Play &rarr;
-        </a>
+        <div class="feature-card">
+          <h3>Interactive Solar Timeline</h3>
+          <p>Scrub seamlessly across any date or time of day with live solar elevation arcs, Brahma Muhurta, and Sandhya markers.</p>
+        </div>
+
+        <div class="feature-card">
+          <h3>Day &amp; Night Ratri Cycles</h3>
+          <p>Switch between diurnal and nocturnal muhurtas, including Ratri Yamagandam, Ratri Gulika, and sacred Nishitha Kaal.</p>
+        </div>
+
+        <div class="feature-card">
+          <h3>Dynamic Sky Atmospheres</h3>
+          <p>Choose automatic natural sky backdrops or custom themes like Surreal Ether paired with Classic, Crystal, Liquid, and Aurora cards.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- App Screenshots -->
+    <section id="screenshots" class="section">
+      <div class="section-header">
+        <div class="section-kicker">Inside the App</div>
+        <h2>Designed for Clarity &amp; Atmosphere</h2>
+      </div>
+
+      <div class="screenshots-grid">
+        <div class="shot-card">
+          <img src="assets/screenshot_01_track_rahu_time.jpg" alt="Track Rahu Time in Real Time" loading="lazy" />
+        </div>
+        <div class="shot-card">
+          <img src="assets/screenshot_02_auspicious_hour_guide.jpg" alt="Auspicious Hour Guide and Daily Muhurtas" loading="lazy" />
+        </div>
+        <div class="shot-card">
+          <img src="assets/screenshot_03_interactive_timeline.jpg" alt="Interactive Timeline Scrubber" loading="lazy" />
+        </div>
+        <div class="shot-card">
+          <img src="assets/screenshot_04_night_spiritual_hours.jpg" alt="Night and Spiritual Hours - Ratri Time" loading="lazy" />
+        </div>
+        <div class="shot-card">
+          <img src="assets/screenshot_05_atmospheres_themes.jpg" alt="Custom Sky Atmospheres and Card Styles" loading="lazy" />
+        </div>
       </div>
     </section>
   </main>
@@ -288,7 +441,8 @@
   <footer>
     <div class="container">
       <div class="footer-links">
-        <a href="https://play.google.com/store/apps/details?id=com.icssoft.rahutime" target="_blank" rel="noopener noreferrer">Google Play</a>
+        <a href="https://play.google.com/store/apps/details?id=com.icssoft.rahutime" target="_blank" rel="noopener noreferrer">Google Play Store</a>
+        <a href="mailto:support@icssoft.example.com">Contact Support</a>
         <a href="/app-ads.txt">app-ads.txt</a>
       </div>
       <p>&copy; 2026 ICS Soft. All rights reserved.</p>
