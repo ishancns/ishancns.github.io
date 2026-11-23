@@ -1,5 +1,299 @@
 <!DOCTYPE html>
-<html>
-<head><title>ICS Soft</title></head>
-<body><h1>ICS Soft</h1><p>Official Developer Website for Rahu Time.</p></body>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ICS Soft — Independent Mobile App Studio</title>
+  <meta name="description" content="ICS Soft crafts thoughtful, utility-focused Android applications including Rahu Time." />
+  <style>
+    :root {
+      --bg: #0f172a;
+      --surface: #1e293b;
+      --surface-hover: #26354d;
+      --border: #334155;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --accent: #6366f1;
+      --accent-hover: #4f46e5;
+      --gold: #f59e0b;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg);
+      color: var(--text-main);
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 880px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+
+    /* Header */
+    header {
+      padding: 2rem 0;
+      border-bottom: 1px solid rgba(51, 65, 85, 0.5);
+    }
+
+    .nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .brand {
+      font-size: 1.25rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .brand-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent), var(--gold));
+    }
+
+    .nav-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.95rem;
+      margin-left: 1.5rem;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover {
+      color: var(--text-main);
+    }
+
+    /* Hero */
+    .hero {
+      padding: 4.5rem 0 3.5rem;
+      text-align: center;
+    }
+
+    .hero h1 {
+      font-size: clamp(2rem, 5vw, 3rem);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.15;
+      margin-bottom: 1rem;
+    }
+
+    .hero p {
+      color: var(--text-muted);
+      font-size: 1.125rem;
+      max-width: 580px;
+      margin: 0 auto;
+    }
+
+    /* App Showcase */
+    .section-title {
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--text-muted);
+      margin-bottom: 1.25rem;
+      font-weight: 600;
+    }
+
+    .app-card {
+      background-color: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      transition: transform 0.2s ease, border-color 0.2s ease;
+    }
+
+    .app-card:hover {
+      border-color: #475569;
+    }
+
+    .app-header {
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+    }
+
+    .app-icon {
+      width: 64px;
+      height: 64px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, #1e1b4b, #4338ca);
+      border: 1px solid rgba(245, 158, 11, 0.4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.75rem;
+      flex-shrink: 0;
+      color: var(--gold);
+    }
+
+    .app-meta h2 {
+      font-size: 1.4rem;
+      font-weight: 700;
+      margin-bottom: 0.2rem;
+    }
+
+    .badge {
+      display: inline-block;
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 0.2rem 0.6rem;
+      border-radius: 999px;
+      background-color: rgba(99, 102, 241, 0.15);
+      color: #a5b4fc;
+    }
+
+    .app-description {
+      color: var(--text-muted);
+      font-size: 1rem;
+    }
+
+    .app-features {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .tag {
+      font-size: 0.82rem;
+      color: var(--text-main);
+      background-color: rgba(15, 23, 42, 0.6);
+      border: 1px solid var(--border);
+      padding: 0.35rem 0.75rem;
+      border-radius: 8px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      background-color: var(--accent);
+      color: #ffffff;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.95rem;
+      padding: 0.75rem 1.4rem;
+      border-radius: 10px;
+      align-self: flex-start;
+      transition: background-color 0.2s;
+    }
+
+    .btn:hover {
+      background-color: var(--accent-hover);
+    }
+
+    /* Footer */
+    footer {
+      margin-top: auto;
+      padding: 3rem 0 2rem;
+      border-top: 1px solid rgba(51, 65, 85, 0.5);
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+
+    .footer-links {
+      margin-bottom: 0.75rem;
+    }
+
+    .footer-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      margin: 0 0.75rem;
+    }
+
+    .footer-links a:hover {
+      color: var(--text-main);
+      text-decoration: underline;
+    }
+
+    @media (min-width: 640px) {
+      .app-card {
+        padding: 2.25rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="container nav">
+      <div class="brand">
+        <span class="brand-dot"></span>
+        <span>ICS Soft</span>
+      </div>
+      <nav class="nav-links">
+        <a href="#apps">Apps</a>
+        <a href="mailto:support@icssoft.example.com">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <h1>Thoughtful utility apps built for everyday clarity.</h1>
+      <p>ICS Soft designs clean, reliable Android software with a focus on precision, performance, and intuitive design.</p>
+    </section>
+
+    <section id="apps">
+      <div class="section-title">Featured Application</div>
+      <div class="app-card">
+        <div class="app-header">
+          <div class="app-icon" aria-hidden="true">&#9788;</div>
+          <div class="app-meta">
+            <h2>Rahu Time</h2>
+            <span class="badge">Android • Utility</span>
+          </div>
+        </div>
+
+        <p class="app-description">
+          Track daily auspicious and inauspicious astronomical periods with location-accurate solar calculations, an interactive timeline scrubber, customizable visual themes, and bilingual support.
+        </p>
+
+        <div class="app-features">
+          <span class="tag">Location-Based Solar Timing</span>
+          <span class="tag">Interactive Timeline</span>
+          <span class="tag">English &amp; Sinhala</span>
+          <span class="tag">Daily Alerts</span>
+        </div>
+
+        <a class="btn" href="https://play.google.com/store/apps/details?id=com.icssoft.rahutime" target="_blank" rel="noopener noreferrer">
+          Get it on Google Play &rarr;
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <div class="footer-links">
+        <a href="https://play.google.com/store/apps/details?id=com.icssoft.rahutime" target="_blank" rel="noopener noreferrer">Google Play</a>
+        <a href="/app-ads.txt">app-ads.txt</a>
+      </div>
+      <p>&copy; 2026 ICS Soft. All rights reserved.</p>
+    </div>
+  </footer>
+
+</body>
 </html>
